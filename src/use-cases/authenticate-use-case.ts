@@ -2,6 +2,7 @@ import { UsersRepositoryProps } from '@/repositories/interfaces/users-repository
 import { InvalidCredentiasError } from './errors/invalid-credentiais-erro'
 import { compare } from 'bcryptjs'
 import { User } from '@prisma/client'
+
 interface AuthenticateUseCaseRequest {
   email: string
   password: string
