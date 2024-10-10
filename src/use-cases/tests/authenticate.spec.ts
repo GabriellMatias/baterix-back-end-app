@@ -39,7 +39,7 @@ describe('Atuthenticate Use Case', () => {
     await userRepository.create({
       email: 'Matias@gmail.com',
       name: 'John Doe',
-      password_hash: await hash('123456', 6),
+      passwordHash: await hash('123456', 6),
     })
 
     await expect(() =>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { UsersRepositoryProps } from '@/repositories/interfaces/users-repository'
 import { AddressRepositoryProps } from '@/repositories/interfaces/address-repository'
 import { hash } from 'bcryptjs'
@@ -56,13 +57,16 @@ export class RegisterUseCase {
     } catch (error) {
       throw new AddressCreationError()
     }
-
     const user = await this.usersRepository.create({
       name,
       email,
       role,
       passwordHash,
-      addressId: createdAddress.id,
+      address: {
+        connect: {
+          id: createdAddress.id,
+        },
+      },
     })
     return { user }
   }

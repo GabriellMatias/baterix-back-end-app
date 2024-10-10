@@ -8,14 +8,14 @@ export async function getPostById(
   reply: FastifyReply,
 ) {
   const paramsSchema = z.object({
-    postId: z.string().uuid(),
+    id: z.string().uuid(),
   })
 
-  const { postId } = paramsSchema.parse(request.params)
+  const { id } = paramsSchema.parse(request.params)
 
   try {
     const getPostByIdUseCase = makeGetPostByIdUseCase()
-    const post = await getPostByIdUseCase.execute({ postId })
+    const post = await getPostByIdUseCase.execute({ postId: id })
 
     if (!post) {
       throw new PostNotFoundError()

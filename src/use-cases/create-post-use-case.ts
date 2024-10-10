@@ -22,7 +22,11 @@ export class CreatePostUseCase {
     const post = await this.postsRepository.create({
       title,
       content,
-      authorId,
+      createdBy: {
+        connect: {
+          id: authorId,
+        },
+      },
     })
 
     return { post }

@@ -6,7 +6,7 @@ interface GetPostsByUserIdUseCaseRequest {
 }
 
 interface GetPostsByUserIdUseCaseResponse {
-  posts: Post[]
+  posts: Post[] | null
 }
 
 export class GetPostsByUserIdUseCase {

@@ -1,6 +1,7 @@
 import { Prisma, Address } from '@prisma/client'
+import { Decimal } from 'decimal.js'
 import { AddressRepositoryProps } from '../interfaces/address-repository'
-
+//TODO: refazer de acordo com o prisma repository
 export class InMemoryAddressRepository implements AddressRepositoryProps {
   public items: Address[] = [] // Armazena os endereços em memória
 
@@ -12,9 +13,12 @@ export class InMemoryAddressRepository implements AddressRepositoryProps {
   async create(data: Prisma.AddressCreateInput): Promise<Address> {
     try {
       const address: Address = {
-        id: `address${this.items.length + 1}`, // Gera um ID único baseado no número de endereços
+        id: `address${this.items.length + 1}`,
         ...data,
-        created_at: new Date(), // Adiciona a data de criação
+        latitude: data.latitude ? new Decimal(data.latitude) : null, // Converte para Decimal
+        longitude: data.longitude ? new Decimal(data.longitude) : null, // Converte para Decimal
+        createdAt: new Date(),
+        updatedAt: new Date(), // Você pode precisar ajustar isso conforme seu modelo
       }
 
       this.items.push(address)
@@ -49,11 +53,10 @@ export class InMemoryAddressRepository implements AddressRepositoryProps {
    * @param userId - ID do usuário.
    * @returns Uma lista de endereços ou null se nenhum for encontrado.
    */
-  async findByUserId(userId: string): Promise<Address[] | null> {
+  async findByUserId(userId: string): Promise<Address | null> {
     try {
-      const addresses = this.items.filter((item) => item.userId === userId) // Supondo que o Address tem uma propriedade userId
-
-      return addresses.length > 0 ? addresses : null
+      const address = this.items.filter((item) => item. === userId)
+      return address
     } catch (error) {
       console.error('Error finding addresses by user ID in memory:', error)
       throw new Error('Failed to find addresses by user ID in memory.')
@@ -99,7 +102,7 @@ export class InMemoryAddressRepository implements AddressRepositoryProps {
       }
 
       const deletedAddress = this.items[index]
-      this.items.splice(index, 1) // Remove o endereço da memória
+      this.items.splice(index, 1)
       return deletedAddress
     } catch (error) {
       console.error('Error deleting address in memory:', error)

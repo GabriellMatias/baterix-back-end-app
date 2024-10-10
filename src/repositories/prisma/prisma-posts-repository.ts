@@ -39,7 +39,7 @@ export class PrismaPostsRepository implements PostsRepositoryProps {
               email: true,
             },
           },
-          comments: {
+          Comment: {
             include: {
               createdBy: {
                 select: {
@@ -78,7 +78,7 @@ export class PrismaPostsRepository implements PostsRepositoryProps {
               email: true,
             },
           },
-          comments: {
+          Comment: {
             include: {
               createdBy: {
                 select: {

@@ -44,9 +44,9 @@ export class PrismaAddressRepository implements AddressRepositoryProps {
    * @param userId - ID do usuário.
    * @returns Uma lista de endereços ou null se nenhum for encontrado.
    */
-  async findByUserId(userId: string): Promise<Address[] | null> {
+  async findByUserId(userId: string): Promise<Address | null> {
     try {
-      const addresses = await prisma.address.findMany({
+      const address = await prisma.address.findFirst({
         where: {
           User: {
             some: {
@@ -55,7 +55,7 @@ export class PrismaAddressRepository implements AddressRepositoryProps {
           },
         },
       })
-      return addresses.length > 0 ? addresses : null
+      return address
     } catch (error) {
       console.error('Error finding addresses by user ID:', error)
       throw new Error('Failed to find addresses by user ID.')
