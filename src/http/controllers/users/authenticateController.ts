@@ -1,5 +1,5 @@
-import { InvalidCredentiasError } from '@/use-cases/errors/invalid-credentiais-erro'
-import { makeAuthenticateUseCase } from '@/use-cases/factories/make-authenticade-use-case'
+import { InvalidCredentiasError } from '@/use-cases/errors/user/invalid-credentiais-erro'
+import { makeAuthenticateUseCase } from '@/use-cases/factories/user/make-authenticade-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -39,6 +39,7 @@ export async function authenticate(
         },
       },
     )
+
     return reply
       .setCookie('refreshToken', refreshToken, {
         /* Quem pode ter acesso */
@@ -51,7 +52,7 @@ export async function authenticate(
         httpOnly: true,
       })
       .status(200)
-      .send({ token })
+      .send(token)
   } catch (error) {
     if (error instanceof InvalidCredentiasError) {
       return reply.status(409).send({ message: error.message })

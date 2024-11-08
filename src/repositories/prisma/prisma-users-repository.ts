@@ -9,6 +9,7 @@ export class PrismaUsersRepository implements UsersRepositoryProps {
    * @returns O usuário criado.
    */
   async create(data: Prisma.UserCreateInput): Promise<User> {
+    console.log(data)
     try {
       const user = await prisma.user.create({
         data,

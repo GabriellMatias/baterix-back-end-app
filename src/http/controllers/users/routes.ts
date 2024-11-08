@@ -4,13 +4,42 @@ import { register } from './registerController'
 import { FastifyInstance } from 'fastify'
 import { VerifyJwt } from '../../middlewares/verifyy-jwt'
 import { refresh } from './refreshController'
+import { registerDocs } from '@/docs/users/register'
+import { authenticateDocs } from '@/docs/users/auth'
+import { refreshDocs } from '@/docs/users/refreshToken'
+import { profileDocs } from '@/docs/users/profile'
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.post('/register', register)
+  app.post(
+    '/register',
+    {
+      schema: registerDocs.schema,
+    },
+    register,
+  )
 
-  app.post('/sessions', authenticate)
+  app.post(
+    '/sessions',
+    {
+      schema: authenticateDocs.schema,
+    },
+    authenticate,
+  )
 
-  app.patch('/token/refresh', refresh)
-  /* Rotas serao chamadas apenas quando o usuario estiver autenticado */
-  app.get('/me', { onRequest: [VerifyJwt] }, profile)
+  app.patch(
+    '/token/refresh',
+    {
+      schema: refreshDocs.schema,
+    },
+    refresh,
+  )
+
+  app.get(
+    '/me',
+    {
+      onRequest: [VerifyJwt],
+      schema: profileDocs.schema,
+    },
+    profile,
+  )
 }

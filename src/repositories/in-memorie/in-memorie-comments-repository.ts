@@ -14,7 +14,10 @@ export class InMemoryCommentsRepository implements CommentsRepositoryProps {
       const comment: Comment = {
         id: `comment${this.items.length + 1}`,
         createdAt: new Date(),
-        ...data,
+        updatedAt: new Date(),
+        postId: data.post.connect?.id as string, // Usa postId diretamente como string
+        userId: data.createdBy.connect?.id as string, // Usa userId diretamente como string
+        content: data.content,
       }
 
       this.items.push(comment)
@@ -71,7 +74,10 @@ export class InMemoryCommentsRepository implements CommentsRepositoryProps {
    * @param data - Dados para atualizar o comentário.
    * @returns O comentário atualizado.
    */
-  async edit(id: string, data: Prisma.CommentUpdateInput): Promise<Comment> {
+  async update(
+    data: Prisma.PostUpdateInput & { id: string },
+  ): Promise<Comment> {
+    const { id } = data
     try {
       const index = this.items.findIndex((item) => item.id === id)
 
@@ -79,7 +85,14 @@ export class InMemoryCommentsRepository implements CommentsRepositoryProps {
         throw new Error('Comentário não encontrado.')
       }
 
-      const updatedComment = { ...this.items[index], ...data }
+      const updatedComment: Comment = {
+        ...this.items[index],
+        ...data,
+        content: data.content as string,
+        createdAt: data.createdAt as Date,
+        updatedAt: new Date(),
+      }
+
       this.items[index] = updatedComment
 
       return updatedComment

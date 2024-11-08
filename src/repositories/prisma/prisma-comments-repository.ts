@@ -77,15 +77,18 @@ export class PrismaCommentsRepository implements CommentsRepositoryProps {
    * @param data - Dados para atualizar o comentário.
    * @returns O comentário atualizado.
    */
-  async edit(id: string, data: Prisma.CommentUpdateInput): Promise<Comment> {
+  async update(
+    data: Prisma.PostUpdateInput & { id: string },
+  ): Promise<Comment> {
     try {
+      const { id, ...commentData } = data
       const updatedComment = await prisma.comment.update({
         where: { id },
-        data,
+        data: commentData,
       })
       return updatedComment
     } catch (error) {
-      console.error(`Erro ao atualizar comentário com ID ${id}:`, error)
+      console.error(`Erro ao atualizar comentário:`, error)
       throw new Error('Erro ao atualizar comentário.')
     }
   }

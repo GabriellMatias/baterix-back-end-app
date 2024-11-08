@@ -1,8 +1,8 @@
-import { makeCreatePostUseCase } from '@/use-cases/factories/make-create-post-use-case'
+import { makeCreatePostUseCase } from '@/use-cases/factories/posts/make-create-post-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PostCreationError } from '@/use-cases/errors/post-creation-erro'
-import { makeGetUserProfileUseCase } from '@/use-cases/factories/make-get-user-profile-use-case'
+import { PostCreationError } from '@/use-cases/errors/posts/post-creation-erro'
+import { makeGetUserProfileUseCase } from '@/use-cases/factories/user/make-get-user-profile-use-case'
 
 export async function createPost(request: FastifyRequest, reply: FastifyReply) {
   const createPostBodySchema = z.object({

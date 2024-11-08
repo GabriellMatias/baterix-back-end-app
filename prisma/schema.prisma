@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./ERD.svg"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -14,21 +19,6 @@ enum Role {
   ADMIN
   MEMBER
   ENTERPRISE
-}
-
-model User {
-  id           String    @id @default(uuid())
-  name         String
-  email        String    @unique
-  passwordHash String
-  role         Role      @default(MEMBER)
-  createdAt    DateTime  @default(now())
-  address      Address   @relation(fields: [addressId], references: [id])
-  Post         Post[]
-  Comment      Comment[]
-  addressId    String
-
-  @@map("users")
 }
 
 model Post {
@@ -57,6 +47,22 @@ model Comment {
   @@map("comments")
 }
 
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(MEMBER)
+  createdAt    DateTime @default(now())
+  addressId    String   @unique
+
+  Post    Post[]
+  Comment Comment[]
+  Address Address?
+
+  @@map("users")
+}
+
 model Address {
   id         String   @id @default(uuid())
   street     String
@@ -66,9 +72,13 @@ model Address {
   longitude  Decimal?
   complement String?
 
+  // Duas relações opostas
+  userId    String @unique
+  createdBy User   @relation("AdressUser", fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User[]
 
   @@map("address")
+  User User[]
 }

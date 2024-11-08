@@ -1,7 +1,7 @@
-import { makeDeletePostUseCase } from '@/use-cases/factories/make-delete-post-use-case'
+import { makeDeletePostUseCase } from '@/use-cases/factories/posts/make-delete-post-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PostNotFoundError } from '@/use-cases/errors/post-not-found-erro'
+import { PostNotFoundError } from '@/use-cases/errors/posts/post-not-found-erro'
 
 export async function deletePost(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({

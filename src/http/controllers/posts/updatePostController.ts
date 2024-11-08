@@ -1,7 +1,7 @@
-import { makeEditPostUseCase } from '@/use-cases/factories/make-edit-post-use-case'
+import { makeEditPostUseCase } from '@/use-cases/factories/posts/make-edit-post-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PostNotFoundError } from '@/use-cases/errors/post-not-found-erro'
+import { PostNotFoundError } from '@/use-cases/errors/posts/post-not-found-erro'
 
 export async function updatePost(request: FastifyRequest, reply: FastifyReply) {
   const paramsSchema = z.object({

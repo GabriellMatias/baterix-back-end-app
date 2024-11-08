@@ -67,7 +67,7 @@ export class PrismaAddressRepository implements AddressRepositoryProps {
    * @param data - Dados para atualizar o endereço, incluindo o ID.
    * @returns O endereço atualizado.
    */
-  async edit(
+  async update(
     data: Prisma.AddressUpdateInput & { id: string },
   ): Promise<Address> {
     try {

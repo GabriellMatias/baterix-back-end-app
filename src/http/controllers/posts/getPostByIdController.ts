@@ -1,5 +1,5 @@
-import { PostNotFoundError } from '@/use-cases/errors/post-not-found-erro'
-import { makeGetPostByIdUseCase } from '@/use-cases/factories/make-get-post-by-id-use-case'
+import { PostNotFoundError } from '@/use-cases/errors/posts/post-not-found-erro'
+import { makeGetPostByIdUseCase } from '@/use-cases/factories/posts/make-get-post-by-id-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -15,7 +15,7 @@ export async function getPostById(
 
   try {
     const getPostByIdUseCase = makeGetPostByIdUseCase()
-    const post = await getPostByIdUseCase.execute({ postId: id })
+    const { post } = await getPostByIdUseCase.execute({ postId: id })
 
     if (!post) {
       throw new PostNotFoundError()

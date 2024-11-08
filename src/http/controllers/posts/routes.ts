@@ -1,19 +1,61 @@
 import { FastifyInstance } from 'fastify'
-import { VerifyJwt } from '../../middlewares/verifyy-jwt'
+import { VerifyJwt } from '@/http/middlewares/verifyy-jwt'
+
 import { createPost } from './createPostController'
+import { deletePost } from './deletePostController'
 import { getPostById } from './getPostByIdController'
 import { getPostByUserId } from './getPostByUserIdController'
 import { updatePost } from './updatePostController'
-import { deletePost } from './deletePostController'
+
+import { createPostDocs } from '@/docs/posts/createPosts'
+import { deletePostDocs } from '@/docs/posts/deletePosts'
+import { getPostByIdDocs } from '@/docs/posts/getPostsById'
+import { getPostByUserIdDocs } from '@/docs/posts/getPostsByUserId'
+import { updatePostDocs } from '@/docs/posts/updatePosts'
 
 export async function postsRoutes(app: FastifyInstance) {
-  app.post('/posts', { onRequest: [VerifyJwt] }, createPost)
+  app.post(
+    '/posts',
+    {
+      onRequest: [VerifyJwt],
+      schema: createPostDocs.schema,
+    },
+    createPost,
+  )
 
-  app.get('/posts', { onRequest: [VerifyJwt] }, getPostByUserId)
+  app.delete(
+    '/posts/:id',
+    {
+      onRequest: [VerifyJwt],
+      schema: deletePostDocs.schema,
+    },
+    deletePost,
+  )
 
-  app.get('/posts/:id', { onRequest: [VerifyJwt] }, getPostById)
+  app.get(
+    '/posts/:id',
+    {
+      onRequest: [VerifyJwt],
+      schema: getPostByIdDocs.schema,
+    },
+    getPostById,
+  )
 
-  app.patch('/posts/:id', { onRequest: [VerifyJwt] }, updatePost)
+  app.get(
+    '/posts/user',
+    {
+      onRequest: [VerifyJwt],
+      schema: getPostByUserIdDocs.schema,
+    },
+    getPostByUserId,
+  )
 
-  app.delete('/posts/:id', { onRequest: [VerifyJwt] }, deletePost)
+  app.put(
+    '/posts/:id',
+    {
+      onRequest: [VerifyJwt],
+      schema: updatePostDocs.schema,
+    },
+    updatePost,
+  )
 }

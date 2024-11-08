@@ -15,7 +15,7 @@ export class InMemoryUserRepository implements UsersRepositoryProps {
         id: `user${this.items.length + 1}`,
         name: data.name,
         email: data.email,
-        password_hash: data.password_hash,
+        password_hash: data.passwordHash,
         role: data.role!,
         created_at: new Date(),
       }
