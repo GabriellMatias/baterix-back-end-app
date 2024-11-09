@@ -1,5 +1,5 @@
 
-```markdown
+
 # Baterix Backend App
 
 ## Instalação e Configuração
@@ -49,5 +49,4 @@ Para executar os testes, use o comando:
 
 ```bash
 npm run test
-```
 ```
