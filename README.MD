@@ -1,4 +1,5 @@
-npm install
-npx prisma generate
-npx prisma migrate dev 
-npm run start:dev
+'npm install'
+'npx prisma generate'
+'npx prisma migrate dev'
+change '.env.example' to '.env'
+'npm run start:dev'
