@@ -16,6 +16,10 @@ export async function setupSwagger() {
         { name: 'posts', description: 'Post management' },
         { name: 'comments', description: 'Comment management' },
         { name: 'address', description: 'Address management' },
+        {
+          name: 'disposalLocation',
+          description: 'Disposal Location management',
+        },
       ],
       securityDefinitions: {
         ApiToken: {
