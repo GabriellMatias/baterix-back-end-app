@@ -1,7 +1,7 @@
 // Documentação para obter locais de descarte por ID de usuário
 export const getDisposalLocationsByUserIdDocs = {
   schema: {
-    tags: ['disposalLocations'],
+    tags: ['disposalLocation'],
     description: 'Get all disposal locations associated with a specific user',
     response: {
       200: {

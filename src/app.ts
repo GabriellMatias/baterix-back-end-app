@@ -8,6 +8,7 @@ import fastifyCookie from '@fastify/cookie'
 import { postsRoutes } from './http/controllers/posts/routes'
 import { commentsRoutes } from './http/controllers/comments/routes'
 import { setupSwagger } from './docs/swagger'
+import { disposalLocationRoutes } from './http/controllers/disposalLocation/routes'
 
 export const app = fastify()
 
@@ -31,6 +32,7 @@ app.register(fastifyJwt, {
 app.register(usersRoutes)
 app.register(postsRoutes)
 app.register(commentsRoutes)
+app.register(disposalLocationRoutes)
 
 /* Treat errors */
 app.setErrorHandler((error, request, reply) => {
