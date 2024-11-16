@@ -17,11 +17,11 @@ export const registerDocs = {
             longitude: { type: 'number' },
             complement: { type: 'string' },
           },
-          required: ['street', 'city', 'postalCode'],
         },
         role: { type: 'string', enum: ['ADMIN', 'MEMBER', 'ENTERPRISE'] },
       },
-      required: ['name', 'email', 'password', 'address'],
+      // 'address' is now optional
+      required: ['name', 'email', 'password'],
     },
     response: {
       201: {
