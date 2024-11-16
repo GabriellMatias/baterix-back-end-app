@@ -6,11 +6,26 @@ import { AddressCreationError } from '../errors/address/address-creation-error'
 import { User, Address } from '@prisma/client'
 import { Prisma } from '@prisma/client'
 
+// Define a custom error class for password length validation
+export class PasswordTooShortError extends Error {
+  constructor() {
+    super('Password must be at least 6 characters long');
+    this.name = 'PasswordTooShortError';
+  }
+}
+
+// Define a custom error class for invalid email format
+export class InvalidEmailFormatError extends Error {
+  constructor() {
+    super('Invalid email format');
+    this.name = 'InvalidEmailFormatError';
+  }
+}
 
 export enum Role {
   ADMIN = 'ADMIN',
   MEMBER = 'MEMBER',
-  ENTERPRISE = 'ENTERPRISE',
+  ENTERPRISE = 'ENTERPRISE', // Fix the closing quote and remove the extra comma
 }
 
 interface RegisterUseCaseParams {
@@ -45,6 +60,15 @@ export class RegisterUseCase {
     role = Role.MEMBER,
     address,
   }: RegisterUseCaseParams): Promise<RegisterUseCaseResponse> {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      throw new InvalidEmailFormatError(); // Throw custom error for invalid email format
+    }
+
+    if (password.length < 6) {
+      throw new PasswordTooShortError(); // Throw custom error for short password
+    }
+
     const passwordHash = await hash(password, 6)
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email)

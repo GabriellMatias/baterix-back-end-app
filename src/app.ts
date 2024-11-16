@@ -58,3 +58,5 @@ app.setErrorHandler((error, request, reply) => {
 
   return reply.status(500).send({ message: 'Internal server error' })
 })
+
+export default app
