@@ -1,0 +1,11 @@
+node_modules
+/node_modules
+
+#builds
+build
+
+# Envoriment
+.env
+
+# test
+coverage
