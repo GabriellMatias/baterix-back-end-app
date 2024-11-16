@@ -23,14 +23,15 @@ model User {
   passwordHash     String
   role             Role               @default(MEMBER)
   createdAt        DateTime           @default(now())
-  address          Address            @relation(fields: [addressId], references: [id])
+  address          Address?           @relation(fields: [addressId], references: [id])  // Make address optional
+  addressId        String?            // Make addressId optional
   Post             Post[]
   Comment          Comment[]
-  addressId        String
   DisposalLocation DisposalLocation[]
 
   @@map("users")
 }
+
 
 model Post {
   id        String    @id @default(uuid())

@@ -52,7 +52,7 @@ export async function authenticate(
         httpOnly: true,
       })
       .status(200)
-      .send(token)
+      .send({ token }) // Send token as JSON object
   } catch (error) {
     if (error instanceof InvalidCredentiasError) {
       return reply.status(409).send({ message: error.message })

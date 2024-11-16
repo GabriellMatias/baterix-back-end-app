@@ -33,15 +33,6 @@ export async function postsRoutes(app: FastifyInstance) {
   )
 
   app.get(
-    '/posts/:id',
-    {
-      onRequest: [VerifyJwt],
-      schema: getPostByIdDocs.schema,
-    },
-    getPostById,
-  )
-
-  app.get(
     '/posts/user',
     {
       onRequest: [VerifyJwt],
@@ -57,5 +48,14 @@ export async function postsRoutes(app: FastifyInstance) {
       schema: updatePostDocs.schema,
     },
     updatePost,
+  )
+
+  app.get(
+    '/posts/:id',
+    {
+      onRequest: [VerifyJwt],
+      schema: getPostByIdDocs.schema,
+    },
+    getPostById,
   )
 }
